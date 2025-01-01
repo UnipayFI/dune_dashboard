@@ -1,0 +1,52 @@
+# Basic dashboard information
+title: "USDU Dashboard"
+description: "USDU stablecoin analytics dashboard"
+category: stablecoins
+tags: 
+  - USDU
+  - stablecoin
+  - DeFi
+
+# Text widget for logo
+text: |
+  <div style="text-align: center;">
+    <img src="YOUR_LOGO_URL" alt="USDU Logo" style="max-width: 200px; height: auto;">
+  </div>
+
+# Query configurations
+queries:
+  # Track total supply metrics
+  - name: "USDU Total Supply"
+    id: your_query_id_here
+    description: "Track USDU total supply over time"
+    
+  # Analyze holder distribution
+  - name: "USDU Holder Distribution"
+    id: your_query_id_here
+    description: "Analysis of USDU holder distribution"
+    
+  # Monitor daily trading volume
+  - name: "USDU Trading Volume"
+    id: your_query_id_here
+    description: "Daily trading volume of USDU"
+    
+  # Track major trading pairs
+  - name: "USDU Trading Pairs"
+    id: your_query_id_here
+    description: "Major trading pairs for USDU"
+    
+  # Price stability analysis
+  - name: "USDU Price"
+    id: your_query_id_here
+    description: "USDU price history and stability analysis"
+
+# Dashboard layout configuration
+layout:
+  # Define the layout and size of charts
+  # This section is optional
+  schema: 2
+  layout:
+    - [text]
+    - [0]
+    - [1, 2]
+    - [3, 4] 
