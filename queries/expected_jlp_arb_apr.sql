@@ -4,5 +4,5 @@ WITH last_30d_avg AS (
   WHERE date >= NOW() - INTERVAL '30' DAY
 )
 SELECT 
-  ROUND(avg_daily_apr * 100 * 0.8, 4) as expected_pure_jlp_arb_apr
+  ROUND(avg_daily_apr * 100 * 0.7, 4) as expected_pure_jlp_arb_apr
 FROM last_30d_avg 
