@@ -1,4 +1,3 @@
--- Stake pool USDu balance: Solana 指定地址 + BSC 合约总余额
 WITH solana_balance AS (
   SELECT
     day,
@@ -9,38 +8,35 @@ WITH solana_balance AS (
 ),
 
 bsc_transfers AS (
-  SELECT evt_block_time, "to" AS address, value AS amount
+  SELECT evt_block_time, value / 1e18 AS amount
   FROM erc20_bnb.evt_Transfer
-  WHERE contract_address = 0x385C279445581a186a4182a5503094eBb652EC71
+  WHERE contract_address = 0xeA953eA6634d55dAC6697C436B1e81A679Db5882
+    AND "to" = 0x385C279445581a186a4182a5503094eBb652EC71
   UNION ALL
-  SELECT evt_block_time, "from" AS address, -value AS amount
+  SELECT evt_block_time, -value / 1e18 AS amount
   FROM erc20_bnb.evt_Transfer
-  WHERE contract_address = 0x385C279445581a186a4182a5503094eBb652EC71
+  WHERE contract_address = 0xeA953eA6634d55dAC6697C436B1e81A679Db5882
+    AND "from" = 0x385C279445581a186a4182a5503094eBb652EC71
 ),
 
 bsc_daily_changes AS (
   SELECT
     date_trunc('day', evt_block_time) AS day,
-    address,
     sum(amount) AS daily_change
   FROM bsc_transfers
-  GROUP BY 1, 2
+  GROUP BY 1
 ),
 
 bsc_daily_balance AS (
   SELECT
     day,
-    address,
-    sum(daily_change) OVER (PARTITION BY address ORDER BY day) AS token_balance
+    sum(daily_change) OVER (ORDER BY day) AS bsc_usdu_balance
   FROM bsc_daily_changes
 ),
 
 bsc_total_per_day AS (
-  SELECT
-    day,
-    sum(CASE WHEN token_balance > 0 THEN token_balance ELSE 0 END) AS bsc_usdu_balance
+  SELECT day, bsc_usdu_balance
   FROM bsc_daily_balance
-  GROUP BY day
 ),
 
 all_days AS (

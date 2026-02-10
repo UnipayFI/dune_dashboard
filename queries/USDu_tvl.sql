@@ -1,4 +1,3 @@
--- USDu TVL：Solana + BSC 两条链 total supply 之和（按日）
 WITH sol_raw AS (
   SELECT
     day,
@@ -17,12 +16,13 @@ sol_supply AS (
   GROUP BY day
 ),
 
+-- BSC USDu 18 位小数，value/1e18
 bsc_transfers AS (
-  SELECT evt_block_time, "to" AS address, value AS amount
+  SELECT evt_block_time, "to" AS address, value / 1e18 AS amount
   FROM erc20_bnb.evt_Transfer
   WHERE contract_address = 0xeA953eA6634d55dAC6697C436B1e81A679Db5882
   UNION ALL
-  SELECT evt_block_time, "from" AS address, -value AS amount
+  SELECT evt_block_time, "from" AS address, -value / 1e18 AS amount
   FROM erc20_bnb.evt_Transfer
   WHERE contract_address = 0xeA953eA6634d55dAC6697C436B1e81A679Db5882
 ),

@@ -1,4 +1,3 @@
--- USDu Top 100 持币地址：Solana + BSC
 WITH solana_holders AS (
   SELECT
     address AS token_balance_owner,

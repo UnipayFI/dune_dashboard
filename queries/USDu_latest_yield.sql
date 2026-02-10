@@ -1,4 +1,3 @@
--- Latest yield (Solana + BSC 之和)
 WITH requests AS (
   SELECT 'solana' AS source, http_get('https://api.unitas.so/api/usdu/latest_rewards?source=solana') AS body
   UNION ALL
